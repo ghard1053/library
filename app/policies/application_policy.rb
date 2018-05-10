@@ -1,9 +1,11 @@
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :user_context, :record, :admin, :user
 
-  def initialize(user, record)
-    @user = user
+  def initialize(user_context, record)
+    @user_context = user_context
     @record = record
+    @admin = user_context.admin
+    @user = user_context.user
   end
 
   def index?
@@ -39,11 +41,13 @@ class ApplicationPolicy
   end
 
   class Scope
-    attr_reader :user, :scope
+    attr_reader :user_context, :scope, :user, :admin
 
-    def initialize(user, scope)
-      @user = user
+    def initialize(user_context, scope)
+      @user_context = user_context
       @scope = scope
+      @admin = user_context.admin
+      @user = user_context.user
     end
 
     def resolve
